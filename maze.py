@@ -1,4 +1,5 @@
 import sys
+import aStar as A
 
 def main():
     with open(sys.argv[1],"r") as f: #membaca nama file sebagai argumen program

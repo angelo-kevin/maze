@@ -81,3 +81,4 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
     while (xt != xAkhir and yt != yAkhir) : #membentuk track
         maze[xt][yt] = "#"
     maze[xAkhir][yAkhir] = "#"
+
