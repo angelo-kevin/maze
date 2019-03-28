@@ -75,3 +75,9 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 yt = parent[i][1] #y parent
     printJalur.append([xAwal,yAwal]) #masih terurut dari titik akhir ke titik awal
     printJalur.reverse() #sudah terurut dari titik awal ke titik akhir
+
+    xt = xAwal
+    yt = yAwal
+    while (xt != xAkhir and yt != yAkhir) : #membentuk track
+        maze[xt][yt] = "="
+    maze[xAkhir][yAkhir] = "="
