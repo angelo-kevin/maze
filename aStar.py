@@ -20,6 +20,13 @@ def f_n(parent,xAwal,yAwal,xSaatIni,ySaatIni,xAkhir,yAkhir) :
 def takef_n(elem) :
     return elem[0]
 
+def cekParent(parent,x,y) : #untuk ngecek apakah titik itu udh ada di list parent sbg parent atau belum
+    found = False
+    for i in range(len(parent)) :
+        if (x == parent[i][0] and y == parent[i][1]) :
+            found = True
+    return found
+
 def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhir
     prio = [] #list priority queue isinya [f_n, x, y]
     awal = maze[xAwal][yAwal] #titik mulai
@@ -28,28 +35,28 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
     yAwalBaru = yAwal
     
     while (xAwalBaru != xAkhir and yAwalBaru != yAkhir) :
-        if (maze[xAwalBaru][yAwalBaru + 1] == 0) :#petak atas
+        if (maze[xAwalBaru][yAwalBaru + 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru + 1))) :#petak atas
             xAtas = xAwalBaru
             yAtas = yAwalBaru + 1
             parent.append([xAwalBaru,yAwalBaru,xAtas,yAtas])
             f_nAtas = f_n(parent,xAwal,yAwal,xAtas,yAtas,xAkhir,yAkhir)
             prio.append([f_nAtas,xAtas,yAtas])
 
-        if (maze[xAwalBaru][yAwalBaru - 1] == 0) :#petak bawah
+        if (maze[xAwalBaru][yAwalBaru - 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru - 1))) :#petak bawah
             xBawah = xAwalBaru
             yBawah = yAwalBaru - 1
             parent.append([xAwalBaru,yAwalBaru,xBawah,yBawah])
             f_nBawah = f_n(parent,xAwal,yAwal,xBawah,yBawah,xAkhir,yAkhir)
             prio.append([f_nBawah,xBawah,yBawah])
 
-        if (maze[xAwalBaru + 1][yAwalBaru] == 0) :#petak kanan
+        if (maze[xAwalBaru + 1][yAwalBaru] == 0 and not(cekParent(parent,xAwalBaru + 1,yAwalBaru))) :#petak kanan
             xKanan = xAwalBaru + 1
             yKanan = yAwalBaru
             parent.append([xAwalBaru,yAwalBaru,xKanan,yKanan])
             f_nKanan = f_n(parent,xAwal,yAwal,xKanan,yKanan,xAkhir,yAkhir)
             prio.append([f_nKanan,xKanan,yKanan])
 
-        if (maze[xAwalBaru - 1][yAwalBaru] == 0) :#petak kiri
+        if (maze[xAwalBaru - 1][yAwalBaru] == 0  and not(cekParent(parent,xAwalBaru - 1,yAwalBaru))) :#petak kiri
             xKiri = xAwalBaru - 1
             yKiri = yAwalBaru
             parent.append([xAwalBaru,yAwalBaru,xKiri,yKiri])
