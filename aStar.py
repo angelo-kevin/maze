@@ -94,17 +94,11 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 printJalur.append([xt,yt])
             else :
                 idx = idx + 1
-    
-    #print("kelar backtrack")
-    #printJalur.reverse() #sudah terurut dari titik awal ke titik akhir
-    #for i in printJalur :
-        #print(i)
 
     for i in range(len(printJalur)) :
         x = printJalur[i][0]
         y = printJalur[i][1]
         maze[x][y] = 8
-        #print("elemen dari ",printJalur[i]," adalah ",maze[x][y])
 
     for i in range(len(maze)):
         for j in range(len(maze)):
