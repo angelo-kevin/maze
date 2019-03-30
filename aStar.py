@@ -12,8 +12,6 @@ def g_n(parent,xAwal,yAwal,xSaatIni,ySaatIni) : #parent = list of parent, xAwal 
                     found = True
                     xSaatIni = parent[i][0]
                     ySaatIni = parent[i][1]
-                    #print(xSaatIni)
-                    #print(ySaatIni)
                 i = i + 1
             jumlah = jumlah + 1
     return jumlah
@@ -44,70 +42,47 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
     xAwalBaru = xAwal 
     yAwalBaru = yAwal
     while (not(ketemu(xAwalBaru,yAwalBaru,xAkhir,yAkhir))) :
-        if (maze[xAwalBaru][yAwalBaru + 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru + 1))) :#petak atas
+        if (maze[xAwalBaru][yAwalBaru + 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru + 1))) :#petak kanan
             xKanan = xAwalBaru
             yKanan = yAwalBaru + 1
-            #print("masuk kanan")
-            #print("untuk ",xKanan," ",yKanan)
-            #print("nilai ",maze[xKanan][xKanan])
             parent.append([xAwalBaru,yAwalBaru,xKanan,yKanan])
-            #print("panjang parent ",len(parent))
             f_nKanan = f_n(parent,xAwal,yAwal,xKanan,yKanan,xAkhir,yAkhir)
-            #print("udah fn segini ", f_nBawah)
             prio.append([f_nKanan,xKanan,yKanan])
 
         if (yAwalBaru != 0) :
-            if (maze[xAwalBaru][yAwalBaru - 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru - 1))) :#petak bawah
+            if (maze[xAwalBaru][yAwalBaru - 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru - 1))) :#petak kiri
                 xKiri = xAwalBaru
                 yKiri = yAwalBaru - 1
-                #print("masuk kiri")
-                #print("untuk ",xKiri," ",yKiri) #ini kenapa maze[1][0] nilainya 0?
-                #print("nilai ",maze[#xKiri][yKiri])
                 parent.append([xAwalBaru,yAwalBaru,xKiri,yKiri])
-                #print("panjang parent ",len(parent))
                 f_nKiri = f_n(parent,xAwal,yAwal,xKiri,yKiri,xAkhir,yAkhir)
-                #print("udah fn segini ", f_nAtas)
                 prio.append([f_nKiri,xKiri,yKiri])
 
-        if (maze[xAwalBaru + 1][yAwalBaru] == 0 and not(cekParent(parent,xAwalBaru + 1,yAwalBaru))) :#petak kanan
-            #print("masuk bawah")
+        if (maze[xAwalBaru + 1][yAwalBaru] == 0 and not(cekParent(parent,xAwalBaru + 1,yAwalBaru))) :#petak bawah
             xBawah = xAwalBaru + 1
             yBawah = yAwalBaru
-            #print("untuk ",xBawah," ",yBawah)
-            #print("nilai ",maze[xBawah][yBawah])
             parent.append([xAwalBaru,yAwalBaru,xBawah,yBawah])
-            #print("panjang parent ",len(parent))
             f_nBawah = f_n(parent,xAwal,yAwal,xBawah,yBawah,xAkhir,yAkhir)
-            #print("udah fn segini ", f_nKanan)
             prio.append([f_nBawah,xBawah,yBawah])
 
         if (xAwalBaru != 0) :
-            if (maze[xAwalBaru - 1][yAwalBaru] == 0  and not(cekParent(parent,xAwalBaru - 1,yAwalBaru))) :#petak kiri
-                #print("masuk atas")
+            if (maze[xAwalBaru - 1][yAwalBaru] == 0  and not(cekParent(parent,xAwalBaru - 1,yAwalBaru))) :#petak atas
                 xAtas = xAwalBaru - 1
                 yAtas = yAwalBaru
-                #print("untuk ",xAtas," ",yAtas)
-                #print("nilai ",maze[xAtas][yAtas])
                 parent.append([xAwalBaru,yAwalBaru,xAtas,yAtas])
-                #print("panjang parent ",len(parent))
                 f_nAtas = f_n(parent,xAwal,yAwal,xAtas,yAtas,xAkhir,yAkhir)
-                #print("udah fn segini ", f_nKiri)
                 prio.append([f_nAtas,xAtas,yAtas])
 
         prio.sort(key=takef_n) #sorting dengan key f_n yang berada di elem[0]
 
-        xAwalBaru = prio[0][1] #masalah
+        xAwalBaru = prio[0][1]
         yAwalBaru = prio[0][2]
 
         del prio[0]
-
-    print("kelar nyari jalur")
 
     printJalur = [] 
     xt = xAwalBaru
     yt = yAwalBaru
     printJalur.append([xt,yt])
-    print("mau mulai backtrack dari ", xAwalBaru, ",", yAwalBaru)
     while (not(ketemu(xt,yt,xAwal,yAwal))) :
         found = False
         idx = 0
@@ -120,9 +95,23 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
             else :
                 idx = idx + 1
     
-    print("kelar backtrack")
-    printJalur.reverse() #sudah terurut dari titik awal ke titik akhir
-    for i in printJalur :
-        print(i)
+    #print("kelar backtrack")
+    #printJalur.reverse() #sudah terurut dari titik awal ke titik akhir
+    #for i in printJalur :
+        #print(i)
+
+    for i in range(len(printJalur)) :
+        x = printJalur[i][0]
+        y = printJalur[i][1]
+        maze[x][y] = 8
+        #print("elemen dari ",printJalur[i]," adalah ",maze[x][y])
+
+    for i in range(len(maze)):
+        for j in range(len(maze)):
+            if (maze[i][j]==8):
+                print(" ", end=" ")
+            else:
+                print(maze[i][j], end=" ")
+        print()
+
     print("ada sebanyak ", len(printJalur), " langkah")
-    #kurang gambarin
