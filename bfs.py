@@ -3,7 +3,7 @@ import queue
 # menampilkan matriks maze yang ada
 def out(mat):
     for i in range(len(mat)):
-        for j in range(len(mat)):
+        for j in range(len(mat[i])):
             if (mat[i][j]==8):
                 print(" ", end=" ")
             else:

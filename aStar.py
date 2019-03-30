@@ -101,7 +101,7 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
         maze[x][y] = 8
 
     for i in range(len(maze)):
-        for j in range(len(maze)):
+        for j in range(len(maze[i])):
             if (maze[i][j]==8):
                 print(" ", end=" ")
             else:
