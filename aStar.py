@@ -108,4 +108,4 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 print(maze[i][j], end=" ")
         print()
 
-    print("ada sebanyak ", len(printJalur), " langkah")
+    print("\nAda sebanyak", len(printJalur), "langkah")
