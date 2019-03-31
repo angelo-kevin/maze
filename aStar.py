@@ -4,7 +4,7 @@ def h_n(xSaatIni,ySaatIni,xAkhir,yAkhir) : #saatIni= titik tersebut, akhir= titi
 def g_n(parent,xAwal,yAwal,xSaatIni,ySaatIni) : #parent = list of parent, xAwal yAwal = titik masukan
     jumlah = 1
     if (not(isParentEmpty(parent))) :
-        while (xSaatIni != xAwal and ySaatIni != yAwal) :
+        while (not(ketemu(xAwal,yAwal,xSaatIni,ySaatIni))) :
             found = False
             i = 0
             while (not(found) and i < len(parent)) :
@@ -34,6 +34,22 @@ def cekParent(parent,x,y) : #untuk ngecek apakah titik itu udh ada di list paren
 
 def ketemu(xAwalBaru,yAwalBaru,xAkhir,yAkhir) :
     return (xAwalBaru == xAkhir and yAwalBaru == yAkhir)
+
+def addPrio(prio,f_n,x,y) :
+    if (len(prio) == 0) :
+        prio.append([f_n,x,y])
+    else :
+        found = False
+        i = 0
+        while (not(found) and i < len(prio)) :
+            if (prio[i][0] > f_n) :
+                found = True
+            else :
+                i = i + 1
+        if (found) :
+            prio.insert(i,[f_n,x,y])
+        else :
+            prio.append([f_n,x,y])
             
 
 def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhir
@@ -47,7 +63,8 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
             yKanan = yAwalBaru + 1
             parent.append([xAwalBaru,yAwalBaru,xKanan,yKanan])
             f_nKanan = f_n(parent,xAwal,yAwal,xKanan,yKanan,xAkhir,yAkhir)
-            prio.append([f_nKanan,xKanan,yKanan])
+            addPrio(prio,f_nKanan,xKanan,yKanan)
+            #prio.append([f_nKanan,xKanan,yKanan])
 
         if (yAwalBaru != 0) :
             if (maze[xAwalBaru][yAwalBaru - 1] == 0 and not(cekParent(parent,xAwalBaru,yAwalBaru - 1))) :#petak kiri
@@ -55,14 +72,16 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 yKiri = yAwalBaru - 1
                 parent.append([xAwalBaru,yAwalBaru,xKiri,yKiri])
                 f_nKiri = f_n(parent,xAwal,yAwal,xKiri,yKiri,xAkhir,yAkhir)
-                prio.append([f_nKiri,xKiri,yKiri])
+                addPrio(prio,f_nKiri,xKiri,yKiri)
+                #prio.append([f_nKiri,xKiri,yKiri])
 
         if (maze[xAwalBaru + 1][yAwalBaru] == 0 and not(cekParent(parent,xAwalBaru + 1,yAwalBaru))) :#petak bawah
             xBawah = xAwalBaru + 1
             yBawah = yAwalBaru
             parent.append([xAwalBaru,yAwalBaru,xBawah,yBawah])
             f_nBawah = f_n(parent,xAwal,yAwal,xBawah,yBawah,xAkhir,yAkhir)
-            prio.append([f_nBawah,xBawah,yBawah])
+            addPrio(prio,f_nBawah,xBawah,yBawah)
+            #prio.append([f_nBawah,xBawah,yBawah])
 
         if (xAwalBaru != 0) :
             if (maze[xAwalBaru - 1][yAwalBaru] == 0  and not(cekParent(parent,xAwalBaru - 1,yAwalBaru))) :#petak atas
@@ -70,9 +89,10 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 yAtas = yAwalBaru
                 parent.append([xAwalBaru,yAwalBaru,xAtas,yAtas])
                 f_nAtas = f_n(parent,xAwal,yAwal,xAtas,yAtas,xAkhir,yAkhir)
-                prio.append([f_nAtas,xAtas,yAtas])
+                addPrio(prio,f_nAtas,xAtas,yAtas)
+                #prio.append([f_nAtas,xAtas,yAtas])
 
-        prio.sort(key=takef_n) #sorting dengan key f_n yang berada di elem[0]
+        #prio.sort(key=takef_n) #sorting dengan key f_n yang berada di elem[0]
 
         xAwalBaru = prio[0][1]
         yAwalBaru = prio[0][2]
@@ -92,6 +112,7 @@ def aStar(maze,xAwal,yAwal,xAkhir,yAkhir) : #awal= titik awal, akhir= titik akhi
                 xt = parent[idx][0]
                 yt = parent[idx][1]
                 printJalur.append([xt,yt])
+                j = idx
             else :
                 idx = idx + 1
 
